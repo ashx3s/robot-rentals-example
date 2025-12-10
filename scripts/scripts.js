@@ -1,45 +1,53 @@
+"use strict";
 /****************** create variables ******************/
-var modelName = "XYZ";
-var duration = 0;
+let modelName = "XYZ";
+let duration = 0;
 
 /****************** helper function ******************/
 function recalculate() {
-  let costLabel = document.getElementById("calculated-cost");
+  const costLabel = document.getElementById("calculated-cost");
 
   if (modelName === "XYZ") {
-    costLabel.innerHTML = duration * 100;
+    const cost = duration * 100;
+    costLabel.textContent = cost.toFixed(2);
   } else if (modelName === "CPRG") {
-    costLabel.innerHTML = duration * 213;
+    const cost = duration * 213;
+    costLabel.textContent = cost.toFixed(2);
   }
 }
 
 /****************** model button logic ******************/
-var modelButton = document.getElementById("model-button");
+const modelButton = document.getElementById("model-button");
 
 function changeModel() {
-  let modelLabel = document.getElementById("model-text");
+  const modelLabel = document.getElementById("model-text");
 
   if (modelName === "XYZ") {
     modelName = "CPRG";
-    modelLabel.innerHTML = "Model CPRG";
+    modelLabel.textContent = "Model CPRG";
   } else {
     modelName = "XYZ";
-    modelLabel.innerHTML = "Model XYZ";
+    modelLabel.textContent = "Model XYZ";
   }
-
   recalculate();
 }
 
 modelButton.addEventListener("click", changeModel);
 
 /****************** duration button logic ******************/
-var durationButton = document.getElementById("duration-button");
+const durationButton = document.getElementById("duration-button");
 
 function changeDuration() {
-  let durationLabel = document.getElementById("duration-text");
-
-  duration = prompt("How many days?");
-  durationLabel.innerHTML = duration;
+  const durationLabel = document.getElementById("duration-text");
+  const input = prompt("How many days?");
+  if (input === null) return;
+  const days = Number(input);
+  if (isNaN(days) || days < 1 || days > 365) {
+    alert("The duration needs to be a number between 1 and 365");
+    return;
+  }
+  duration = days;
+  durationLabel.textContent = duration;
   recalculate();
 }
 
